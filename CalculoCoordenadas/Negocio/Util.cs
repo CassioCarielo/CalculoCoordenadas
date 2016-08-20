@@ -86,6 +86,9 @@ namespace CalculoCoordenadas.Negocio
         {
             //Cálcular a distância entre pontos
             DataRow drPessoaSelecionada = tbPessoa.Select("Nome = '" + nomePessoa + "'").FirstOrDefault();
+
+            if (drPessoaSelecionada == null) return tbPessoa;
+
             List<DataRow> listPessoa = tbPessoa.AsEnumerable().ToList();
             foreach (DataRow itemPessoa in listPessoa)
             {
