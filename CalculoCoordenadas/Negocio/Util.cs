@@ -10,6 +10,34 @@ namespace CalculoCoordenadas.Negocio
     public class Util
     {
         /// <summary>
+        /// CriarBase
+        /// </summary>
+        /// <returns></returns>
+        public DataTable CriarBase()
+        {
+            DataTable tbPessoa = new DataTable();
+            tbPessoa.TableName = "tbPessoa";
+            tbPessoa.Columns.Add(new DataColumn("Nome", typeof(string)));
+            tbPessoa.Columns.Add(new DataColumn("Latitude", typeof(decimal)));
+            tbPessoa.Columns.Add(new DataColumn("Longitude", typeof(decimal)));
+            tbPessoa.Columns.Add(new DataColumn("Distancia", typeof(decimal)));
+
+            DataColumn[] keys = new DataColumn[1];
+            keys[0] = tbPessoa.Columns[0];
+            tbPessoa.PrimaryKey = keys;
+
+            tbPessoa.Rows.Add("Marcos", 25, 16);
+            tbPessoa.Rows.Add("João", 28, 86);
+            tbPessoa.Rows.Add("Maria", 29, 96);
+            tbPessoa.Rows.Add("Antonio", 30, 44);
+            tbPessoa.Rows.Add("Cassio", 54, 46);
+            tbPessoa.Rows.Add("Lucas", 77, 30);
+            tbPessoa.Rows.Add("Carla", 15, 21);
+
+            return tbPessoa;
+        }
+
+        /// <summary>
         /// CalcularDistancia - Calcula a Distância entre dois pontos
         /// </summary>
         /// <param name="origem_lat"></param>
@@ -49,31 +77,34 @@ namespace CalculoCoordenadas.Negocio
         }
 
         /// <summary>
-        /// CriarBase
+        /// Calcular a Distância de todas as Pessoas
+        /// </summary>
+        /// <param name="tbPessoa"></param>
+        /// <param name="nomePessoa"></param>
+        /// <returns></returns>
+        public DataTable CalcularDistancia(DataTable tbPessoa, string nomePessoa) 
+        {
+            //Cálcular a distância entre pontos
+            DataRow drPessoaSelecionada = tbPessoa.Select("Nome = '" + nomePessoa + "'").FirstOrDefault();
+            List<DataRow> listPessoa = tbPessoa.AsEnumerable().ToList();
+            foreach (DataRow itemPessoa in listPessoa)
+            {
+                itemPessoa["Distancia"] = 0;
+                if (itemPessoa["Nome"].ToString().ToUpper().Trim() != nomePessoa.ToUpper().Trim())
+                    itemPessoa["Distancia"] = new Util().CalcularDistancia(Convert.ToDouble(drPessoaSelecionada["Latitude"]), Convert.ToDouble(drPessoaSelecionada["Longitude"]), Convert.ToDouble(itemPessoa["Latitude"]), Convert.ToDouble(itemPessoa["Longitude"]));
+            }
+            return tbPessoa;
+        }
+
+        /// <summary>
+        /// Selecionar as 3 pessoas mais próximas
         /// </summary>
         /// <returns></returns>
-        public DataTable CriarBase()
+        public IEnumerable<DataRow> SelecionarProximas(DataTable tbPessoa)
         {
-            DataTable tbPessoa = new DataTable();
-            tbPessoa.TableName = "tbPessoa";
-            tbPessoa.Columns.Add(new DataColumn("Nome", typeof(string)));
-            tbPessoa.Columns.Add(new DataColumn("Latitude", typeof(decimal)));
-            tbPessoa.Columns.Add(new DataColumn("Longitude", typeof(decimal)));
-            tbPessoa.Columns.Add(new DataColumn("Distancia", typeof(decimal)));
-            
-            DataColumn[] keys = new DataColumn[1];
-            keys[0] = tbPessoa.Columns[0];
-            tbPessoa.PrimaryKey = keys;
-
-            tbPessoa.Rows.Add("Marcos", 25, 16);
-            tbPessoa.Rows.Add("João", 28, 86);
-            tbPessoa.Rows.Add("Maria", 29, 96);
-            tbPessoa.Rows.Add("Antonio", 30, 44);
-            tbPessoa.Rows.Add("Cassio", 54, 46);
-            tbPessoa.Rows.Add("Lucas", 77, 30);
-            tbPessoa.Rows.Add("Carla", 15, 21);
-
-            return tbPessoa;
+            tbPessoa.DefaultView.Sort = "Distancia asc";
+            tbPessoa = tbPessoa.DefaultView.ToTable(true);
+            return tbPessoa.Select("Distancia <> 0").Take(3);
         }
     }
 }

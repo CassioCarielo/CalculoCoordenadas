@@ -36,33 +36,22 @@ namespace CalculoCoordenadas
             {
                 line = Console.ReadLine();
                 if (line == string.Empty)
-                    Console.WriteLine("Favor entrar com um nome válido.");
+                    Console.WriteLine("Entre com um nome válido.");
                 else
                 {
                     qtdPessoas = tbPessoa.Select("Nome = '" + line + "'").Count();
                     if (qtdPessoas == 0)
-                    {
-                        Console.WriteLine("Nome não encontrado! Favor entrar com um nome válido.");
-                    }
+                        Console.WriteLine("Nome não encontrado! Entre com um nome da lista.");
                 }
             } while (line == string.Empty || qtdPessoas == 0);
 
 
             //Cálcular a distância entre pontos
-            DataRow drPessoaSelecionada = tbPessoa.Select("Nome = '" + line + "'").FirstOrDefault();
-            List<DataRow> listPessoa = tbPessoa.AsEnumerable().ToList();
-            foreach (DataRow itemPessoa in listPessoa)
-            {
-                itemPessoa["Distancia"] = 0;
-                if (itemPessoa["Nome"].ToString() != line)
-                    itemPessoa["Distancia"] = new Util().CalcularDistancia(Convert.ToDouble(drPessoaSelecionada["Latitude"]), Convert.ToDouble(drPessoaSelecionada["Longitude"]), Convert.ToDouble(itemPessoa["Latitude"]), Convert.ToDouble(itemPessoa["Longitude"]));
-            }
+            tbPessoa = new Util().CalcularDistancia(tbPessoa, line);
 
 
             //Selecionar as 3 pessoas mais próximas
-            tbPessoa.DefaultView.Sort = "Distancia asc";
-            tbPessoa = tbPessoa.DefaultView.ToTable(true);
-            var drProximas = tbPessoa.Select("Distancia <> 0").Take(3);
+            IEnumerable<DataRow> drProximas = new Util().SelecionarProximas(tbPessoa);
             Console.WriteLine("Resultado da consulta:");
             foreach (DataRow itemProxima in drProximas)
                 Console.WriteLine("Pessoa: " + itemProxima["Nome"].ToString() + " Distância: " + Decimal.Parse(itemProxima["Distancia"].ToString()).ToString("0.##") + "Km");
