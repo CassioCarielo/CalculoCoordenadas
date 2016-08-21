@@ -5,26 +5,8 @@ using System.Linq;
 
 namespace CalculoCoordenadas.Negocio
 {
-    public class bsCoordenadas
+    public class BsCoordenadas
     {
-        /// <summary>
-        /// CriarBase
-        /// </summary>
-        /// <returns></returns>
-        public List<Pessoa> CriarLista()
-        {
-            List<Pessoa> listPessoa = new List<Pessoa>();
-            listPessoa.Add(new Pessoa { Nome = "Marcos", Latitude = 25, Longitude = 16, Distancia = 0 });
-            listPessoa.Add(new Pessoa { Nome = "João", Latitude = 28, Longitude = 86, Distancia = 0 });
-            listPessoa.Add(new Pessoa { Nome = "Maria", Latitude = 29, Longitude = 96, Distancia = 0 });
-            listPessoa.Add(new Pessoa { Nome = "Antonio", Latitude = 30, Longitude = 44, Distancia = 0 });
-            listPessoa.Add(new Pessoa { Nome = "Cassio", Latitude = 54, Longitude = 46, Distancia = 0 });
-            listPessoa.Add(new Pessoa { Nome = "Lucas", Latitude = 77, Longitude = 30, Distancia = 0 });
-            listPessoa.Add(new Pessoa { Nome = "Carla", Latitude = 15, Longitude = 21, Distancia = 0 });
-
-            return listPessoa;
-        }
-
         /// <summary>
         /// CalcularDistancia - Calcula a Distância entre dois pontos
         /// </summary>
@@ -77,7 +59,7 @@ namespace CalculoCoordenadas.Negocio
             if (pessoaEncontrada == null) return new List<Pessoa>();
 
             foreach (var pessoa in listPessoa)
-                pessoa.Distancia = new bsCoordenadas().CalcularDistancia(Convert.ToDouble(pessoaEncontrada.Latitude), Convert.ToDouble(pessoaEncontrada.Longitude), Convert.ToDouble(pessoa.Latitude), Convert.ToDouble(pessoa.Longitude));
+                pessoa.Distancia = new BsCoordenadas().CalcularDistancia(Convert.ToDouble(pessoaEncontrada.Latitude), Convert.ToDouble(pessoaEncontrada.Longitude), Convert.ToDouble(pessoa.Latitude), Convert.ToDouble(pessoa.Longitude));
 
             return listPessoa;
         }

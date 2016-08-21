@@ -1,4 +1,5 @@
-﻿using CalculoCoordenadas.Entidades;
+﻿using CalculoCoordenadas.Dados;
+using CalculoCoordenadas.Entidades;
 using CalculoCoordenadas.Negocio;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,11 @@ namespace CalculoCoordenadas
             Console.WriteLine("");
 
 
+            //Consultar cadastro de Pessoas
+            List<Pessoa> listPessoa = new DtPessoa().Consultar();
+
+            
             //Exibe as pessoas cadastradas
-            List<Pessoa> listPessoa = new bsCoordenadas().CriarLista();
             Console.WriteLine("Lista de Pessoas cadastradas.");
             foreach (Pessoa pessoa in listPessoa)
                 Console.WriteLine("Nome: " + pessoa.Nome + " Latitude: " + pessoa.Latitude + " Longitude: " + pessoa.Longitude);
@@ -36,7 +40,7 @@ namespace CalculoCoordenadas
                     Console.WriteLine("Entre com um nome válido.");
                 else
                 {
-                    pessoaEncontrada = new bsCoordenadas().ProcuraPessoa(listPessoa, nomeInformado);
+                    pessoaEncontrada = new BsCoordenadas().ProcuraPessoa(listPessoa, nomeInformado);
                     if (pessoaEncontrada == null)
                         Console.WriteLine("Nome não encontrado! Entre com um nome da lista.");
                 }
@@ -44,11 +48,11 @@ namespace CalculoCoordenadas
 
 
             //Cálcular a distância entre pontos
-            listPessoa = new bsCoordenadas().CalcularDistancia(listPessoa, nomeInformado);
+            listPessoa = new BsCoordenadas().CalcularDistancia(listPessoa, nomeInformado);
 
 
             //Selecionar as 3 pessoas mais próximas
-            List<Pessoa> listPessoaSelecionadas = new bsCoordenadas().SelecionarProximas(listPessoa, nomeInformado);
+            List<Pessoa> listPessoaSelecionadas = new BsCoordenadas().SelecionarProximas(listPessoa, nomeInformado);
             Console.WriteLine("Resultado da consulta:");
             foreach (Pessoa pessoa in listPessoaSelecionadas)
                 Console.WriteLine("Pessoa: " + pessoa.Nome + " Distância: " + pessoa.Distancia.ToString("0.##") + "Km");
