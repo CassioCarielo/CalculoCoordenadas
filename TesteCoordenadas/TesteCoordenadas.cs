@@ -51,5 +51,23 @@ namespace TesteCoordenadas
             listPessoa = new bsCoordenadas().CalcularDistancia(listPessoa, "Teste");
             Assert.IsFalse(listPessoa.Count > 0);
         }
+
+        [TestMethod]
+        public void TesteProcurarPessoaValido()
+        {
+            List<Pessoa> listPessoa = new bsCoordenadas().CriarLista();
+
+            Pessoa pessoa = new bsCoordenadas().ProcuraPessoa(listPessoa, "Maria");
+            Assert.IsTrue(pessoa != null);
+        }
+
+        [TestMethod]
+        public void TesteProcurarPessoaInvalido()
+        {
+            List<Pessoa> listPessoa = new bsCoordenadas().CriarLista();
+
+            Pessoa pessoa = new bsCoordenadas().ProcuraPessoa(listPessoa, "Teste");
+            Assert.IsFalse(pessoa != null);
+        }
     }
 }
