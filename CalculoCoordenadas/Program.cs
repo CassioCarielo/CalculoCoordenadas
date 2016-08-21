@@ -10,8 +10,8 @@ namespace CalculoCoordenadas
         static void Main(string[] args)
         {
             string nomeInformado = string.Empty;
-
             
+
             Console.WriteLine("=-Consultar as três pessoas mais próximas de uma informada-=");
             Console.WriteLine("");
 

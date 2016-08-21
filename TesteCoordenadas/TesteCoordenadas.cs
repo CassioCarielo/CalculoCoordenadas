@@ -38,7 +38,7 @@ namespace TesteCoordenadas
         public void TesteCalculoDistanciaValido()
         {
             List<Pessoa> listPessoa = new bsCoordenadas().CriarLista();
-
+            
             listPessoa = new bsCoordenadas().CalcularDistancia(listPessoa, "Maria");
             Assert.IsTrue(listPessoa.Count > 0);
         }
