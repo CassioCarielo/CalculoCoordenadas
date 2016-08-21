@@ -1,10 +1,7 @@
-﻿using CalculoCoordenadas.Negocio;
+﻿using CalculoCoordenadas.Entidades;
+using CalculoCoordenadas.Negocio;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CalculoCoordenadas
 {
@@ -12,7 +9,7 @@ namespace CalculoCoordenadas
     {
         static void Main(string[] args)
         {
-            string line = string.Empty;
+            string nomeInformado = string.Empty;
 
             
             Console.WriteLine("=-Consultar as três pessoas mais próximas de uma informada-=");
@@ -20,10 +17,10 @@ namespace CalculoCoordenadas
 
 
             //Exibe as pessoas cadastradas
-            DataTable tbPessoa = new Util().CriarBase();
+            List<Pessoa> listPessoa = new bsCoordenadas().CriarLista();
             Console.WriteLine("Lista de Pessoas cadastradas.");
-            foreach (DataRow itemPessoa in tbPessoa.Rows)
-                Console.WriteLine("Nome: " + itemPessoa["Nome"] + " Latitude: " + itemPessoa["Latitude"] + " Longitude: " + itemPessoa["Longitude"]);
+            foreach (Pessoa pessoa in listPessoa)
+                Console.WriteLine("Nome: " + pessoa.Nome + " Latitude: " + pessoa.Latitude + " Longitude: " + pessoa.Longitude);
 
 
             Console.WriteLine("");
@@ -31,30 +28,30 @@ namespace CalculoCoordenadas
 
 
             //Procurar nome na lista
-            int qtdPessoas = 0;
+            Pessoa pessoaEncontrada = new Pessoa();
             do
             {
-                line = Console.ReadLine();
-                if (line == string.Empty)
+                nomeInformado = Console.ReadLine();
+                if (nomeInformado == string.Empty)
                     Console.WriteLine("Entre com um nome válido.");
                 else
                 {
-                    qtdPessoas = tbPessoa.Select("Nome = '" + line + "'").Count();
-                    if (qtdPessoas == 0)
+                    pessoaEncontrada = new bsCoordenadas().ProcuraPessoa(listPessoa, nomeInformado);
+                    if (pessoaEncontrada == null)
                         Console.WriteLine("Nome não encontrado! Entre com um nome da lista.");
                 }
-            } while (line == string.Empty || qtdPessoas == 0);
+            } while (nomeInformado == string.Empty || pessoaEncontrada == null);
 
 
             //Cálcular a distância entre pontos
-            tbPessoa = new Util().CalcularDistancia(tbPessoa, line);
+            listPessoa = new bsCoordenadas().CalcularDistancia(listPessoa, nomeInformado);
 
 
             //Selecionar as 3 pessoas mais próximas
-            IEnumerable<DataRow> drProximas = new Util().SelecionarProximas(tbPessoa);
+            List<Pessoa> listPessoaSelecionadas = new bsCoordenadas().SelecionarProximas(listPessoa, nomeInformado);
             Console.WriteLine("Resultado da consulta:");
-            foreach (DataRow itemProxima in drProximas)
-                Console.WriteLine("Pessoa: " + itemProxima["Nome"].ToString() + " Distância: " + Decimal.Parse(itemProxima["Distancia"].ToString()).ToString("0.##") + "Km");
+            foreach (Pessoa pessoa in listPessoaSelecionadas)
+                Console.WriteLine("Pessoa: " + pessoa.Nome + " Distância: " + pessoa.Distancia.ToString("0.##") + "Km");
             
             Console.WriteLine("Fim da consulta.");
             Console.ReadLine();

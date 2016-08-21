@@ -1,7 +1,8 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using CalculoCoordenadas.Entidades;
 using CalculoCoordenadas.Negocio;
-using System.Data;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 
 namespace TesteCoordenadas
 {
@@ -9,57 +10,46 @@ namespace TesteCoordenadas
     public class TesteCoordenadas
     {
         [TestMethod]
-        public void testeCriarBase()
+        public void TesteCriarLista()
         {
-            DataTable table = new Util().CriarBase();
-            Assert.IsTrue(table.Rows.Count > 0);
+            List<Pessoa> listPessoa = new bsCoordenadas().CriarLista();
+
+            Assert.IsTrue(listPessoa.Count > 0);
         }
 
         [TestMethod]
-        public void testeCalculoPontosValido()
+        public void TesteCalculoPontosValido()
         {
-            var distancia = new Util().CalcularDistancia(2, 23, 22, 15);
+            var distancia = new bsCoordenadas().CalcularDistancia(2, 23, 22, 15);
+
             Assert.IsTrue(distancia > 0);
         }
     
         [TestMethod]
-        public void testeCalculoPontosInvalido()
+        public void TesteCalculoPontosInvalido()
         {
             double distancia = 0;
 
-            try
-            {
-                distancia = new Util().CalcularDistancia(0, 0, 0, 0);
-            }
-            catch (Exception)
-            {
-                distancia = 0;
-            }
+            distancia = new bsCoordenadas().CalcularDistancia(0, 0, 0, 0);
             Assert.IsFalse(distancia > 0);
         }
 
         [TestMethod]
-        public void testeCalculoDistanciaValido()
+        public void TesteCalculoDistanciaValido()
         {
-            DataTable tbPessoa = new Util().CriarBase();
+            List<Pessoa> listPessoa = new bsCoordenadas().CriarLista();
 
-            tbPessoa = new Util().CalcularDistancia(tbPessoa, "Maria");
-            Assert.IsTrue(tbPessoa.Rows.Count > 0);
+            listPessoa = new bsCoordenadas().CalcularDistancia(listPessoa, "Maria");
+            Assert.IsTrue(listPessoa.Count > 0);
         }
 
         [TestMethod]
-        public void testeCalculoDistanciaInvalido()
+        public void TesteCalculoDistanciaInvalido()
         {
-            DataTable tbPessoa = new Util().CriarBase();
-            bool achouPessoa = false;
+            List<Pessoa> listPessoa = new bsCoordenadas().CriarLista();
 
-            tbPessoa = new Util().CalcularDistancia(tbPessoa, "Teste");
-            foreach (DataRow item in tbPessoa.Rows)
-            {
-                achouPessoa = item["Distancia"].Equals("0");
-                if (achouPessoa) break;
-            }
-            Assert.IsFalse(achouPessoa);
+            listPessoa = new bsCoordenadas().CalcularDistancia(listPessoa, "Teste");
+            Assert.IsFalse(listPessoa.Count > 0);
         }
     }
 }

@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Negocio\Util.cs" />
+    <Compile Include="Entidades\Pessoa.cs" />
+    <Compile Include="Negocio\bsCoordenadas.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
