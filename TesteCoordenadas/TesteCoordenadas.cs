@@ -20,7 +20,7 @@ namespace TesteCoordenadas
         [TestMethod]
         public void TesteCalculoPontosValido()
         {
-            var distancia = new aBsCoordenadas().CalcularDistancia(2, 23, 22, 15);
+            var distancia = new BsCoordenadas().CalcularDistancia(2, 23, 22, 15);
 
             Assert.IsTrue(distancia > 0);
         }
@@ -30,7 +30,7 @@ namespace TesteCoordenadas
         {
             double distancia = 0;
 
-            distancia = new aBsCoordenadas().CalcularDistancia(0, 0, 0, 0);
+            distancia = new BsCoordenadas().CalcularDistancia(0, 0, 0, 0);
             Assert.IsFalse(distancia > 0);
         }
 
@@ -40,7 +40,7 @@ namespace TesteCoordenadas
             List<Pessoa> listPessoa = new DtPessoa().Consultar();
             Pessoa pessoaInformada = new Pessoa { Nome = "Maria" };
 
-            listPessoa = new aBsCoordenadas().CalcularDistancia(listPessoa, pessoaInformada);
+            listPessoa = new BsCoordenadas().CalcularDistancia(listPessoa, pessoaInformada);
             Assert.IsTrue(listPessoa.Count > 0);
         }
 
@@ -50,7 +50,7 @@ namespace TesteCoordenadas
             List<Pessoa> listPessoa = new DtPessoa().Consultar();
             Pessoa pessoaInformada = null;
 
-            listPessoa = new aBsCoordenadas().CalcularDistancia(listPessoa, pessoaInformada);
+            listPessoa = new BsCoordenadas().CalcularDistancia(listPessoa, pessoaInformada);
             Assert.IsFalse(listPessoa.Count > 0);
         }
 
@@ -59,7 +59,7 @@ namespace TesteCoordenadas
         {
             List<Pessoa> listPessoa = new DtPessoa().Consultar();
 
-            Pessoa pessoa = new aBsCoordenadas().ProcuraPessoa(listPessoa, "Maria");
+            Pessoa pessoa = new BsCoordenadas().ProcuraPessoa(listPessoa, "Maria");
             Assert.IsTrue(pessoa != null);
         }
 
@@ -68,7 +68,7 @@ namespace TesteCoordenadas
         {
             List<Pessoa> listPessoa = new DtPessoa().Consultar();
 
-            Pessoa pessoa = new aBsCoordenadas().ProcuraPessoa(listPessoa, "Teste");
+            Pessoa pessoa = new BsCoordenadas().ProcuraPessoa(listPessoa, "Teste");
             Assert.IsFalse(pessoa != null);
         }
     }

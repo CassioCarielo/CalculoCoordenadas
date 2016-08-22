@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CalculoCoordenadas.Negocio
 {
-    public class aBsCoordenadas
+    public class BsCoordenadas
     {
         /// <summary>
         /// CalcularDistancia - Calcula a Distância entre dois pontos
@@ -58,7 +58,7 @@ namespace CalculoCoordenadas.Negocio
             if (pessoaInformada == null) return new List<Pessoa>();
 
             foreach (var pessoa in listPessoa)
-                pessoa.Distancia = new aBsCoordenadas().CalcularDistancia(Convert.ToDouble(pessoaInformada.Latitude), Convert.ToDouble(pessoaInformada.Longitude), Convert.ToDouble(pessoa.Latitude), Convert.ToDouble(pessoa.Longitude));
+                pessoa.Distancia = new BsCoordenadas().CalcularDistancia(Convert.ToDouble(pessoaInformada.Latitude), Convert.ToDouble(pessoaInformada.Longitude), Convert.ToDouble(pessoa.Latitude), Convert.ToDouble(pessoa.Longitude));
 
             return listPessoa;
         }

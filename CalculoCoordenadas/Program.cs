@@ -40,7 +40,7 @@ namespace CalculoCoordenadas
                     Console.WriteLine("Entre com um nome válido.");
                 else
                 {
-                    pessoaInformada = new aBsCoordenadas().ProcuraPessoa(listPessoa, nomeInformado);
+                    pessoaInformada = new BsCoordenadas().ProcuraPessoa(listPessoa, nomeInformado);
                     if (pessoaInformada == null)
                         Console.WriteLine("Nome não encontrado! Entre com um nome da lista.");
                 }
@@ -48,11 +48,11 @@ namespace CalculoCoordenadas
 
 
             //Cálcular a distância entre pontos
-            listPessoa = new aBsCoordenadas().CalcularDistancia(listPessoa, pessoaInformada);
+            listPessoa = new BsCoordenadas().CalcularDistancia(listPessoa, pessoaInformada);
 
 
             //Selecionar as 3 pessoas mais próximas
-            List<Pessoa> listPessoaSelecionadas = new aBsCoordenadas().SelecionarProximas(listPessoa, pessoaInformada);
+            List<Pessoa> listPessoaSelecionadas = new BsCoordenadas().SelecionarProximas(listPessoa, pessoaInformada);
             Console.WriteLine("Resultado da consulta:");
             foreach (Pessoa pessoa in listPessoaSelecionadas)
                 Console.WriteLine("Pessoa: " + pessoa.Nome + " Distância: " + pessoa.Distancia.ToString("0.##") + "Km");
