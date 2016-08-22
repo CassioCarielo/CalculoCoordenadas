@@ -52,14 +52,13 @@ namespace CalculoCoordenadas.Negocio
         /// <param name="tbPessoa"></param>
         /// <param name="nomePessoa"></param>
         /// <returns></returns>
-        public List<Pessoa> CalcularDistancia(List<Pessoa> listPessoa, string nomeInformado)
+        public List<Pessoa> CalcularDistancia(List<Pessoa> listPessoa, Pessoa pessoaInformada)
         {
             //Cálcular a distância entre pontos
-            Pessoa pessoaEncontrada = listPessoa.Find(x => x.Nome == nomeInformado);
-            if (pessoaEncontrada == null) return new List<Pessoa>();
+            if (pessoaInformada == null) return new List<Pessoa>();
 
             foreach (var pessoa in listPessoa)
-                pessoa.Distancia = new BsCoordenadas().CalcularDistancia(Convert.ToDouble(pessoaEncontrada.Latitude), Convert.ToDouble(pessoaEncontrada.Longitude), Convert.ToDouble(pessoa.Latitude), Convert.ToDouble(pessoa.Longitude));
+                pessoa.Distancia = new BsCoordenadas().CalcularDistancia(Convert.ToDouble(pessoaInformada.Latitude), Convert.ToDouble(pessoaInformada.Longitude), Convert.ToDouble(pessoa.Latitude), Convert.ToDouble(pessoa.Longitude));
 
             return listPessoa;
         }
@@ -79,9 +78,9 @@ namespace CalculoCoordenadas.Negocio
         /// Selecionar as 3 pessoas mais próximas
         /// </summary>
         /// <returns></returns>
-        public List<Pessoa> SelecionarProximas(List<Pessoa> listPessoa, string nomeInformado)
+        public List<Pessoa> SelecionarProximas(List<Pessoa> listPessoa, Pessoa pessoaInformada)
         {
-            listPessoa.Remove(ProcuraPessoa(listPessoa, nomeInformado));
+            listPessoa.Remove(ProcuraPessoa(listPessoa, pessoaInformada.Nome));
             return listPessoa.OrderBy(x => x.Distancia).Take(3).ToList();
         }
     }

@@ -38,8 +38,9 @@ namespace TesteCoordenadas
         public void TesteCalculoDistanciaValido()
         {
             List<Pessoa> listPessoa = new DtPessoa().Consultar();
-            
-            listPessoa = new BsCoordenadas().CalcularDistancia(listPessoa, "Maria");
+            Pessoa pessoaInformada = new Pessoa { Nome = "Maria" };
+
+            listPessoa = new BsCoordenadas().CalcularDistancia(listPessoa, pessoaInformada);
             Assert.IsTrue(listPessoa.Count > 0);
         }
 
@@ -47,8 +48,9 @@ namespace TesteCoordenadas
         public void TesteCalculoDistanciaInvalido()
         {
             List<Pessoa> listPessoa = new DtPessoa().Consultar();
+            Pessoa pessoaInformada = null;
 
-            listPessoa = new BsCoordenadas().CalcularDistancia(listPessoa, "Teste");
+            listPessoa = new BsCoordenadas().CalcularDistancia(listPessoa, pessoaInformada);
             Assert.IsFalse(listPessoa.Count > 0);
         }
 
