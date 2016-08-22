@@ -1,6 +1,7 @@
 ﻿using CalculoCoordenadas.Entidades;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 
 namespace CalculoCoordenadas.Negocio
@@ -80,8 +81,10 @@ namespace CalculoCoordenadas.Negocio
         /// <returns></returns>
         public List<Pessoa> SelecionarProximas(List<Pessoa> listPessoa, Pessoa pessoaInformada)
         {
+            int qtdPessoas = Convert.ToInt32(ConfigurationManager.AppSettings["QtdPessoas"].ToString());
+
             listPessoa.Remove(ProcuraPessoa(listPessoa, pessoaInformada.Nome));
-            return listPessoa.OrderBy(x => x.Distancia).Take(3).ToList();
+            return listPessoa.OrderBy(x => x.Distancia).Take(qtdPessoas).ToList();
         }
     }
 }
