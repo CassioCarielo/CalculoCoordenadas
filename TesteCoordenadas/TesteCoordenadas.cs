@@ -1,8 +1,7 @@
-﻿using CalculoCoordenadas.Entidades;
-using CalculoCoordenadas.Dados;
+﻿using CalculoCoordenadas.Dados;
+using CalculoCoordenadas.Entidades;
 using CalculoCoordenadas.Negocio;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 
 namespace TesteCoordenadas
